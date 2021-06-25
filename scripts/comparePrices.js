@@ -1,4 +1,5 @@
 const ethusd = require('../ethusd-formatted.json')
+const btcusd = require('../btc-coingecko.json')
 const data = require('../data-updated-copy.json')
 const fs = require('fs');
 
