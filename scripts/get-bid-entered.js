@@ -17,8 +17,7 @@ const now = await dater.getDate()
 let endBlock = now.block;
 let startBlock = endBlock - 1000000;
 
-const filter =  contract.filters.PunkBought();
-
+const filter =  contract.filters.PunkBidEntered();
 
 const getData = async (filter, start, end) => {
   let totalData = [];
@@ -26,33 +25,30 @@ const getData = async (filter, start, end) => {
   while(start > cryptoPunkGenesis){
     const events = await contract.queryFilter(filter, start, end)
     const data = events.map(event => {
-        const blockNumber = event.blockNumber;
-        let punkIndex = event.args.punkIndex;
-        let value = event.args.value;
-        value = ethers.utils.formatUnits(value._hex);
-        punkIndex = ethers.utils.formatUnits(punkIndex._hex)
+        const value = ethers.utils.formatUnits(event.args.value._hex);
+        let punkIndex = ethers.utils.formatUnits(event.args.punkIndex._hex)
         .replace(/\./g, '');
         punkIndex = parseInt(punkIndex, 10);
+        const blockNumber = event.blockNumber
+        
         return {
-            block: blockNumber,
-            time: '',
-            punkIndex : punkIndex,
-            priceInETH : value
+          punkIndex: punkIndex,
+          priceInEth: value,
+          blockNumber: blockNumber,
+          time:''
         }
     });
-    data.forEach(array => {totalData.push(array)})
-    
+    console.log(data, 'Truncating... ;)');
+    data.forEach(array => {totalData.push(array)})   
     start = start - 1000000;
     end = end - 1000000;
-    console.log('Truncating ... ', data)
-    
   }
   try {
-    fs.writeFileSync('data.json', JSON.stringify(totalData))
+    fs.writeFileSync('bid-data.json', JSON.stringify(totalData))
   }
   catch (err){
     console.log(err)
-  }
+  }    
   return totalData;
 }
 
