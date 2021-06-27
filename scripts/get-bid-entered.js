@@ -52,26 +52,12 @@ const getData = async (filter, start, end) => {
   return totalData;
 }
 
+
+
 let data = await getData(filter, startBlock, endBlock);
 console.log('DATA : ', data)
 
 
-
-// blocks = blocks.sort((a, b) => b - a);
-
-// let dates = []
-// for (const block of blocks) {
-//   let result = await provider.getBlock(block)
-//   result = fromUnixTime(result.timestamp)
-//   dates.push(result);
-//   console.log(dates);  
-// }
-//   try {
-//     fs.writeFileSync('dates.json', JSON.stringify(dates))
-//   }
-//   catch (err){
-//     console.log(err)
-//   }
  }
 
 
