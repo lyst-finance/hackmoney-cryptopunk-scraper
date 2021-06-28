@@ -47,12 +47,12 @@ const getData = async (filter, start, end) => {
     console.log('Truncating ... ', data)
     
   }
-  try {
-    fs.writeFileSync('data.json', JSON.stringify(totalData))
-  }
-  catch (err){
-    console.log(err)
-  }
+  // try {
+  //   fs.writeFileSync('data.json', JSON.stringify(totalData))
+  // }
+  // catch (err){
+  //   console.log(err)
+  // }
   return totalData;
 }
 
